@@ -36,7 +36,7 @@ int main(void) {
         } else if (strcmp(strlwr(str), "no") == 0 || strcmp(strlwr(str), "n") == 0) {
             restart = true;
         };
-    } while(restart);
+    } while (restart);
 
     return 0;
 };
