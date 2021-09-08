@@ -1,2 +1,3 @@
-# C-Programming-Class
- C code for my intro to programming class.
+# Intro to Programming
+
+All code posted to this repo is for learning purposes...
