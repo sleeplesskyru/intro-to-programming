@@ -16,7 +16,7 @@ I have also used a `do...while` loop which is similar to a `while` loop but it w
 
 //Defining variables outside of main() so we can use them anywhere in this file.
 float radius, area;
-char str[25];
+char str[];
 
 int main(void) {
     bool restart = false; //`restart` will be `false` by default and changed if needed... (bool uses <stdbool.h>)
