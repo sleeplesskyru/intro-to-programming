@@ -3,6 +3,12 @@
 #include <string.h>
 #include <time.h>
 
+/*
+Author: Kyle Gorr
+===========
+This code is not finished!
+*/
+
 int main () {
    int i, n, a;
    time_t t;
