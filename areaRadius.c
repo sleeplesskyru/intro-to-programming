@@ -1,52 +1,90 @@
 #include <stdio.h>
-#include <windows.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <conio.h>
+#include <Windows.h>
 #include <stdbool.h>
 
 /*
 Author: Kyle Gorr
-Version: 1.0.2
-====
-This code is based off the code in section 1 of our C Programming text book with a little extra added to it.
-
-In addition to the main purpose, finding the area of a circle by it's given radius, this program also implements if statements to ensure you enter the correct values.
-I have also used a `do...while` loop which is similar to a `while` loop but it will run the code first and THEN check the `while` condition and loop back if the value is true.
+Version: 1.2.0
+===========
+"Petals Around the Rose" is a puzzle game played with dice. This code will randomly generate 5 numbers (roll the dice) and will ask you for an answer to the puzzle.
+The Rules: The key to the formula is given by the name of the puzzle, and the presenter should state the name of the challenge distinctly. The calculated (announced) result for a throw is calculated by counting only the "petals around the rose", where a "rose" is any die face with a center dot. On a standard 6-sided die, this corresponds to the three odd faces—1, 3, and 5. The rose's "petals" are the dots which surround the center dot. There is no rose on the 2, 4, or 6 faces, so these count as zero. There are no petals on the 1 face, so it also counts as zero. There are two petals and four petals on the 3 and 5 faces, respectively. Thus, the solution to a given throw can be found by:
+Adding the total petals, or;
+Starting with 2 times the number of dice that land on the 3 face and adding to it 4 times the number of dice that lands on the 5 face.
+For example, in a roll of 1-2-3-4-5-6, there is one 3 and one 5 face, so the result is two plus four, or six.
+(Rules supplied by wikipedia)
 */
 
-//Defining variables outside of main() so we can use them anywhere in this file.
-float radius, area;
-char str[100];
 
-int main(void) {
-    bool restart = false; //`restart` will be `false` by default and changed if needed... (bool uses <stdbool.h>)
-    do {
-        restart = false; //If loop restarts, we want `restart` to be `false` again...
-        system("cls"); //Clears all previous text in the console... (system() uses <stdlib.h>)
+int main() {
+   int i, n, a;
+   time_t t;
+   n = 5;
+   int roll[5];
+   int random;
+   int input;
+   bool restart = false;
+   char playAgain[25];
 
-        printf("Enter the radius: \n");
+   srand((unsigned) time(&t));
 
-        if (scanf("%f", &radius) != 1) { //checks if the user input value is a float and store value in `radius`. If false: runs code in {} block...
-            printf("The radius must be a number.\n\n");
-            
-            system("pause"); //waits for user to press a key to continue...
+   do {
+      a = 0;
+      restart = false;
+      system("cls");
+      printf("Your roll is: ");
 
-            restart = true; //Sets `restart` to true so the `while` condition reads `true` and restarts the `do` loop...
-        };
+      for ( i = 0 ; i < n ; i++ ) {
+         random = rand() % 6 + 1;
 
-        printf("You said %.1f... Is that right?\n", radius);
-        scanf("%s", str);
+         roll[i] = random;
+         
+         switch (random) {
+            case 3: {
+               a += 2;
+               break;
+            };
 
-        if (strcmp(strlwr(str), "yes") == 0 || strcmp(strlwr(str), "y") == 0) { //strcmp compares two strings (0 means that the strings are the same). strlwr(x) takes the given string and converts it to lowercase... (uses <string.h>)
-            area = (float) (3.14159 * radius * radius);
+            case 5: {
+               a += 4;
+               break;
+            };
+         };
 
-            printf("The area of the circle is: %.1f\n\n", area);
+         printf("%d ", random);
+      };
 
-            system("pause");
-        } else if (strcmp(strlwr(str), "no") == 0 || strcmp(strlwr(str), "n") == 0) {
+      printf("\n\nWhat is this answer to this roll?\nYour answer: ");
+
+      scanf("%i", &input);
+
+      if (input == a) {
+         printf("Correct!");
+      } else {
+         printf("Incorrect, the answer was %d. Try again...\n", a);
+         Sleep(3000);
+         restart = true;
+      };
+
+      if (!restart) {
+         printf("\n\nPlay again? (Y/N)\nYour answer: ");
+
+         scanf("%s", &playAgain);
+
+         if (strcmp(strlwr(playAgain), "yes") == 0 || strcmp(strlwr(playAgain), "y") == 0) {
             restart = true;
-        };
-    } while (restart); //if `restart` == true, the whole `do...while` loop starts back at the top. To check `false`, you would write it as `while (!restart)`...
+         } else if (strcmp(strlwr(playAgain), "no") == 0 || strcmp(strlwr(playAgain), "n") == 0) {
+            system("cls");
+            printf("Thanks for playing!");
+            Sleep(2000);
+         };
+      };
+      
+   } while (restart);
+   
 
-    return 0;
+   return 0;
 };
