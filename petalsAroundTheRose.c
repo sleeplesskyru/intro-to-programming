@@ -8,7 +8,7 @@
 
 /*
 Author: Kyle Gorr
-Version: 1.0.0
+Version: 1.2.0
 ===========
 "Petals Around the Rose" is a puzzle game played with dice. This code will randomly generate 5 numbers (roll the dice) and will ask you for an answer to the puzzle.
 
@@ -26,10 +26,9 @@ int main() {
    int i, n, a;
    time_t t;
    n = 5;
-   int roll[] = {0};
+   int roll[5];
    int random;
    int input;
-   char *str;
    bool restart = false;
 
    srand((unsigned) time(&t));
@@ -43,14 +42,23 @@ int main() {
          random = rand() % 6 + 1;
 
          roll[i] = random;
+         
+         switch (random) {
+            case 3: {
+               a += 2;
+               break;
+            };
 
-         if (random == 3) a += 2;
-         if (random == 5) a += 4;
+            case 5: {
+               a += 4;
+               break;
+            };
+         };
 
          printf("%d ", random);
       };
 
-      printf("\n\nWhat is this answer to this roll? (The answer is: %d)\nYour answer: ", a);
+      printf("\n\nWhat is this answer to this roll?\nYour answer: ");
 
       scanf("%i", &input);
 
